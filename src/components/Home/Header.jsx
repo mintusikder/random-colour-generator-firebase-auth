@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom";
 import demo2 from "../../assets/images/demo2.PNG";
+import { useContext, useDebugValue } from "react";
+import { AuthContext } from "../../route/AuthProvider";
 
 const Header = () => {
+  const user = useContext(AuthContext)
+  console.log(user )
   return (
     <div className="header-container">
       <div className="header-title">

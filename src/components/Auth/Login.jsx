@@ -1,14 +1,21 @@
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
+
   const handelForm =(e) =>{
     e.preventDefault()
     const form = e.target
     const email = form.email.value 
     const password = form.password.value 
     console.log(email, password)
+
+    if(error ){
+      toast(error)
+      return
+    }
   }
 
   const handelPassword =(e) =>{
@@ -16,7 +23,7 @@ const Login = () => {
     setPassword(passwordInput)
     if(passwordInput.length < 6){
       setError("Need 6 Number")
-    }else if(!/ ^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(passwordInput)){  
+    }else if(!/ ^(?=.*[A-Za-z])$/.test(passwordInput)){  
       setError("Minimum eight characters, at least one letter and one number:")
     }  
     else{
@@ -49,7 +56,11 @@ const Login = () => {
       id="password"
       value={password}
       onChange={handelPassword}
-      className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+      className={`block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0  peer
+      
+      ${password ? error ? "border-red-500" : "border-green-500" :" focus:border-blue-600"}`}
+
+
       placeholder=" "
       required
     />
@@ -61,6 +72,7 @@ const Login = () => {
     </label>
     <p>{error && <span className="text-error">{error}</span>}</p>
   </div>
+  <button type="submit">Login</button>
 </form>
 };
 
